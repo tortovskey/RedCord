@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "redcord"
+version = "0.1.0"
+description = "Desktop writer editor with self-healing patterns"
+requires-python = ">=3.12"
+authors = [{name = "RedCord Team"}]
+dependencies = [
+  "PyQt6>=6.7",
+  "SQLAlchemy>=2.0",
+  "psycopg[binary]>=3.1",
+  "alembic>=1.13",
+  "pydantic>=2.7",
+  "pydantic-settings>=2.2",
+  "python-dotenv>=1.0",
+  "APScheduler>=3.10",
+  "watchdog>=4.0",
+  "loguru>=0.7",
+  "cryptography>=42.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
