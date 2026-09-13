@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: redcord
+      POSTGRES_USER: redcord
+      POSTGRES_PASSWORD: redcord
+    ports:
+      - "5438:5432"
+    volumes:
+      - redcord_pg_data:/var/lib/postgresql/data
+
+  redcord-backend:
+    build:
+      context: .
+      dockerfile: redcord/backend/Dockerfile
+    environment:
+      REDCORD_BACKEND_DATABASE_URL: postgresql+psycopg://redcord:redcord@postgres:5432/redcord
+    depends_on:
+      - postgres
+    ports:
+      - "8088:8088"
+
+volumes:
+  redcord_pg_data:

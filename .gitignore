@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.redcord_test_tmp/
+.redcord_stale_tmp/
+build/
+dist/
+redcord_build/
+installer_output/
