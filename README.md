@@ -1,41 +1,45 @@
 # RedCord 0.8.3
 
-RedCord Writer Desktop - offline-first desktop editor for writers on Python + PyQt6.
-Version 0.8.3 keeps the 0.8 architecture, polishes the top Word-like ribbon,
-continues BoC Lite as an internal RedCord art tab, and improves the visual layer
-without adding any external legacy product.
+**RedCord Writer Desktop** is an offline-first desktop writing environment built with **Python** and **PyQt6**. It combines a WYSIWYG editor, project and concept management, lightweight versioning, an integrated art workspace, optional AI tools, and self-healing utilities in a single application designed for writers.
 
-The desktop client works locally without internet. SQLite is used by the app;
-PostgreSQL is used only by the optional online beta backend.
+RedCord works locally without an internet connection. The desktop application stores its data in **SQLite**. An optional online beta backend can use **PostgreSQL** for account and synchronization features.
 
-## What's New In 0.8.3
+## Highlights
 
-- Version updated to `0.8.3`; installer output is `RedCord_Setup_0_8_3.exe`.
-- Reworked the top bar into a contextual Word-like ribbon: quick actions stay
-  visible, while command groups are split into `Home`, `Insert`, `Art`,
-  `Review`, `View`, and `Settings`.
-- Ribbon buttons, shortcuts, tooltips and Help Center are still generated from
-  `CommandRegistry`, so documentation follows the real UI commands.
-- BoC Lite gained a cleaner service layer, canvas presets, composition grid and
-  fill tool.
-- Art sections remain focused on writer assets: concept art, book covers, comic
-  covers and manga covers.
-- Custom dark theme colors are saved locally in `data/custom_theme.json`.
-- 12 Dark Color's themes remain available, with `Dark Crimson` as the default.
+- Offline-first desktop workflow for writers.
+- WYSIWYG editor with familiar Word-like formatting controls.
+- Project, document, tag, category, template, and concept management.
+- Built-in commit history, rollback, and branch support.
+- **BoC Lite** art workspace for concept art and cover sketches.
+- Optional AI assistant with mock and OpenAI-compatible providers.
+- Self-healing tools for health checks, recovery, backups, and event logging.
+- 12 dark themes plus a customizable dark theme.
+- Optional online beta backend for authentication and synchronization.
 
-## Run
+## What's New in 0.8.3
+
+- Updated the application version to `0.8.3`.
+- Reworked the top interface into a contextual Word-like ribbon.
+- Added dedicated ribbon sections: `Home`, `Insert`, `Art`, `Review`, `View`, and `Settings`.
+- Kept ribbon commands, shortcuts, tooltips, and Help Center entries synchronized through `CommandRegistry`.
+- Improved BoC Lite with a cleaner service layer, canvas presets, composition grid, and fill tool.
+- Focused art workflows on concept art, book covers, comic covers, and manga covers.
+- Added persistent custom dark theme colors in `data/custom_theme.json`.
+- Kept 12 Dark Color's themes, with `Dark Crimson` as the default.
+
+## Run RedCord
 
 ```powershell
 python -m redcord.app.main
 ```
 
-Local 0.8.x data is stored in:
+The primary 0.8.x local database is stored in:
 
 ```text
 data/redcord_08.db
 ```
 
-User files that must be preserved:
+User data that should be preserved during updates includes:
 
 ```text
 data/
@@ -49,6 +53,109 @@ data/ai_settings.json
 data/accounts.json
 data/branches.json
 data/redcord.log
+```
+
+## Main Workspace
+
+### Documents
+
+Create and manage projects and documents, organize them with tags and categories, use autosave and Save As, import files or folders, export to PDF, search and replace text, view statistics, and insert writer blocks.
+
+### Concepts
+
+Create, edit, save, delete, and convert concepts into full documents.
+
+### Art / BoC Lite
+
+Create quick visual assets for writing projects, including:
+
+- concept art;
+- book covers;
+- comic covers;
+- manga covers.
+
+BoC Lite includes brush, eraser, fill, line, rectangle, ellipse, color picker, brush size controls, composition grid, canvas presets, undo, clear canvas, image import, save, and PNG export.
+
+It is intentionally lightweight: BoC Lite is designed for sketches, concepts, and cover drafts rather than professional digital painting.
+
+Art metadata is stored in `data/redcord_08.db`, while exported and saved images are kept in:
+
+```text
+data/art_assets/
+```
+
+### Git / Versions
+
+RedCord includes an internal versioning workflow with commits, history preview, rename, delete, rollback, and branches.
+
+### AI Agent
+
+The AI tab can work with the current document or selection and supports inserting, replacing, or creating content in a new document.
+
+Supported providers:
+
+- `mock` — default local provider that works offline;
+- `openai_compatible` — configurable OpenAI-compatible endpoint.
+
+AI settings are stored locally in:
+
+```text
+data/ai_settings.json
+```
+
+API keys are not stored in source code and are not written to application logs. If an API key is saved through the UI, it is stored locally in the user's RedCord data files.
+
+### Self-Healing
+
+The Self-Healing workspace provides health checks, recovery tools, backups, outbox testing, and system event information.
+
+### Settings
+
+Settings include themes, custom dark colors, profile/account options, templates, ZIP updates, synchronization, and help.
+
+## Ribbon Interface
+
+The top interface is organized as a compact contextual ribbon.
+
+- **Quick bar** — save, undo, redo, new document, find, export PDF, art actions, and focus mode.
+- **Home** — file, document, editing, and formatting commands.
+- **Insert** — writer blocks and concepts.
+- **Art** — BoC Lite canvas tools and cover presets.
+- **Review** — commits, rollback, and branches.
+- **View** — side panels, focus mode, compact mode, and font size.
+- **Settings** — themes, custom theme, updates, synchronization, and help.
+
+Ribbon commands are defined through:
+
+```text
+redcord/services/command_registry.py
+```
+
+## Formatting Shortcuts
+
+Formatting is WYSIWYG and works as toggleable On/Off tools.
+
+```text
+Ctrl+B        Bold On/Off
+Ctrl+I        Italic On/Off
+Ctrl+U        Underline On/Off
+Ctrl+Alt+1    H1 On/Off
+Ctrl+Alt+2    H2 On/Off
+Ctrl+Alt+3    H3 On/Off
+Ctrl+Shift+8  Bullet list On/Off
+Ctrl+Shift+7  Numbered list On/Off
+```
+
+## Themes
+
+RedCord includes 12 dark themes. `Dark Crimson` is the default.
+
+To create a custom palette, open `Настройки`, select `Custom Dark`, edit the colors, and press `Сохранить custom`.
+
+The custom palette is stored locally in:
+
+```text
+data/custom_theme.json
 ```
 
 ## Build EXE
@@ -75,111 +182,17 @@ Expected output:
 installer_output\RedCord_Setup_0_8_3.exe
 ```
 
-The installer installs only RedCord Writer Desktop. It does not install the beta
-backend or local PostgreSQL and must not remove user data during updates.
-
-## Main Tabs
-
-- `Документы`: projects, documents, tags/categories, autosave, save/save as,
-  import file/folder, export PDF, find/replace, stats and writer blocks.
-- `Концепты`: create, edit, save, delete and convert concepts into documents.
-- `Арты / BoC Lite`: concept art, book covers, comic covers and manga covers.
-- `Git / версии`: commits, preview, rename, delete, rollback and branches.
-- `ИИ-агент`: mock provider by default, OpenAI-compatible settings, current
-  document/selection input, insert/replace/new-document actions.
-- `Self-Healing`: health checks, recovery, backup, outbox test and events.
-- `Настройки`: theme, custom dark color, profile/account, templates, update ZIP,
-  online beta sync.
-
-## Ribbon
-
-The top UI is compact and contextual:
-
-- `Quick bar`: save, undo, redo, new document, find, export PDF, new/save art,
-  focus mode.
-- `Home`: file/document, edit and format tools.
-- `Insert`: writer blocks and concepts.
-- `Art`: BoC Lite canvas tools and cover presets.
-- `Review`: commits, rollback and branches.
-- `View`: side panels, focus mode, compact mode and font size.
-- `Settings`: theme, custom theme, updates, sync and help.
-
-The ribbon is built from:
-
-```text
-redcord/services/command_registry.py
-```
-
-## Formatting
-
-Formatting is WYSIWYG and works like On/Off tools:
-
-```text
-Ctrl+B        Bold On/Off
-Ctrl+I        Italic On/Off
-Ctrl+U        Underline On/Off
-Ctrl+Alt+1    H1 On/Off
-Ctrl+Alt+2    H2 On/Off
-Ctrl+Alt+3    H3 On/Off
-Ctrl+Shift+8  Bullet list On/Off
-Ctrl+Shift+7  Numbered list On/Off
-```
-
-## BoC Lite
-
-`BoC Lite` is a lightweight art studio inside RedCord, focused on writer assets:
-
-- concept art;
-- book covers;
-- comic covers;
-- manga covers.
-
-Tools include brush, eraser, fill, line, rectangle, ellipse, color picker, brush
-size, composition grid, canvas presets, undo, clear canvas, image import, save
-and PNG export. It is not a full Krita replacement; it is a quick sketch/concept
-layer for story projects.
-
-Art metadata is stored in `data/redcord_08.db`; PNG files are saved under:
-
-```text
-data/art_assets/
-```
-
-## Custom Theme
-
-Open `Настройки`, choose `Custom Dark`, edit colors and press
-`Сохранить custom`. The palette is stored locally:
-
-```text
-data/custom_theme.json
-```
-
-## AI Agent
-
-AI settings are stored locally:
-
-```text
-data/ai_settings.json
-```
-
-Supported providers:
-
-- `mock` - default local provider, works offline.
-- `openai_compatible` - universal OpenAI-compatible endpoint.
-
-API keys are never stored in source code and are not logged. If you save an API
-key in the UI, it is stored locally in JSON; protect access to your Windows
-profile and RedCord data folder.
+The installer contains only **RedCord Writer Desktop**. It does not install the optional beta backend, PostgreSQL, or Docker, and updates must preserve user data.
 
 ## Online Beta Backend
 
-The backend is optional and shipped separately from the desktop installer:
+The online backend is optional and distributed separately from the desktop installer.
 
 ```powershell
 docker compose -f docker-compose.backend.yml up --build
 ```
 
-Backend endpoints:
+Available endpoints:
 
 ```text
 GET  /health
@@ -190,12 +203,11 @@ POST /sync/pull
 POST /sync/push
 ```
 
-Auth uses an email code. In development, if SMTP is not configured, the code is
-written to backend logs.
+Authentication uses an email code. In development mode, if SMTP is not configured, the code is written to backend logs.
 
 ## Update ZIP Manifest
 
-0.8 update archives may include `redcord_update_manifest.json`:
+RedCord 0.8 update archives may include a `redcord_update_manifest.json` file:
 
 ```json
 {
@@ -211,18 +223,13 @@ written to backend logs.
 }
 ```
 
-Before applying an update, RedCord backs up current app files to
-`data/update_backups/`, validates the manifest, preserves `data/`, `commits/`,
-`.env`, writes `data/update.log`, and in EXE mode stages the update through
-`apply_update.bat`.
+Before applying an update, RedCord backs up current application files to `data/update_backups/`, validates the manifest, preserves `data/`, `commits/`, and `.env`, writes `data/update.log`, and in EXE mode stages the update through `apply_update.bat`.
 
-## Migration From 0.7.x
+## Migration from 0.7.x
 
-On first 0.8.x launch, RedCord looks for legacy `data/redcord.db`, creates a
-backup, and imports compatible projects, documents, concepts, commits, templates,
-accounts and branches into `data/redcord_08.db`.
+On the first 0.8.x launch, RedCord checks for the legacy `data/redcord.db` database, creates a backup, and imports compatible projects, documents, concepts, commits, templates, accounts, and branches into `data/redcord_08.db`.
 
-The old database is not edited. This is a one-way import into the new schema.
+The original database is not modified. Migration is a one-way import into the 0.8 schema.
 
 ## Tests
 
@@ -239,9 +246,8 @@ pytest
 
 ## Known Limitations
 
-- `BoC Lite` is for quick concept sketches and covers, not full professional
-  digital painting.
-- Online accounts and sync remain beta.
-- Real email delivery requires SMTP settings; development mode logs the code.
+- BoC Lite is intended for quick sketches and cover concepts, not full professional digital painting.
+- Online accounts and synchronization are still beta features.
+- Real email delivery requires SMTP configuration; development mode writes the verification code to backend logs.
 - The desktop installer does not include PostgreSQL or Docker.
-- The editor is Word-like and WYSIWYG, but it is not a full Microsoft Word clone.
+- The editor provides a Word-like WYSIWYG workflow but is not intended to replicate the full Microsoft Word feature set.
