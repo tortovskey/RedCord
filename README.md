@@ -150,7 +150,7 @@ Ctrl+Shift+7  Numbered list On/Off
 
 RedCord includes 12 dark themes. `Dark Crimson` is the default.
 
-To create a custom palette, open `Настройки`, select `Custom Dark`, edit the colors, and press `Сохранить custom`.
+To create a custom palette, open the application settings, select `Custom Dark`, edit the colors, and save the custom theme.
 
 The custom palette is stored locally in:
 
