@@ -65,7 +65,7 @@ WRITER_BLOCKS: dict[str, str] = {
 
 
 def selection_to_plain_text(text: str) -> str:
-    return text.replace("\u2029", "\n")
+    return text.replace("\r\n", "\n").replace("\r", "\n").replace("\u2028", "\n").replace("\u2029", "\n")
 
 
 def wrap_text(text: str, before: str, after: str, placeholder: str = "текст") -> str:
@@ -77,7 +77,7 @@ def prefix_lines(text: str, prefix: str) -> str:
     value = selection_to_plain_text(text)
     if not value:
         return prefix
-    return "\n".join(prefix + line if line.strip() else line for line in value.splitlines())
+    return "\n".join(prefix + line if line.strip() else line for line in value.split("\n"))
 
 
 def number_lines(text: str) -> str:
@@ -86,7 +86,7 @@ def number_lines(text: str) -> str:
         return "1. "
     counter = 1
     lines: list[str] = []
-    for line in value.splitlines():
+    for line in value.split("\n"):
         if line.strip():
             lines.append(f"{counter}. {line.strip()}")
             counter += 1
